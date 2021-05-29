@@ -1,0 +1,55 @@
+{% extends 'base.html' %}
+
+{% load wagtailimages_tags %}
+{% load wagtailcore_tags %}
+{% load static %}
+
+{% block content %}
+<div class="container">
+  <header class="blog-header py-3">
+    <div class="row flex-nowrap justify-content-between align-items-center">
+      <div class="col-4 pt-1">
+        <a class="link-secondary" href="#">Subscribe</a>
+      </div>
+      <div class="col-4 text-center">
+        <a class="blog-header-logo text-dark" href="/">Lyndon</a>
+      </div>
+      <div class="col-4 d-flex justify-content-end align-items-center">
+        <a class="link-secondary" href="#" aria-label="Search">
+          <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" class="mx-3" role="img" viewBox="0 0 24 24"><title>Search</title><circle cx="10.5" cy="10.5" r="7.5"></circle><path d="M21 21l-5.2-5.2"></path></svg>
+        </a>
+        <a class="btn btn-sm btn-outline-secondary" href="#">Sign up</a>
+      </div>
+    </div>
+  </header>
+  <hr>
+</div>
+<main class="container mt-4">
+  {% image page.background_image fill-1600x800 as bg_img %}
+  <div class="p-4 p-md-5 mb-4 text-dark rounded" style="background-image: url('{{ bg_img.url }}'); height: 40vh;">
+    <div class="col-md-5 px-0">
+      <h1 class="display-4 fst-italic">{{ page.headline_text }}</h1>
+      <p class="lead my-3">Multiple lines of text that form the lede, informing new readers quickly and efficiently about what’s most interesting in this post’s contents.</p>
+    </div>
+  </div>
+  <div class="row mb-2">
+  {% for post in page.get_children %}
+    <div class="col-md-6">
+      <div class="row g-0 border rounded overflow-hidden flex-md-row mb-4 shadow-sm h-md-250 position-relative">
+        <div class="col p-4 d-flex flex-column position-static">
+          <h3 class="mb-1">{{ post.title }}</h3>
+          <div class="mb-3 text-muted">{{ post.specific.date}}</div>
+          <p class="card-text mb-auto">{{ post.specific.intro }}</p>
+          <a href="{% pageurl post %}" class="stretched-link">Continue reading</a>
+        </div>
+        <div class="col-auto d-none d-lg-block">
+          {% image post.specific.blog_image fill-200x250 %}
+        </div>
+      </div>
+    </div>
+  {% empty %}
+    <h2>No blog posts</h2>
+  {% endfor %}
+  </div>
+</main>
+{% endblock %}
