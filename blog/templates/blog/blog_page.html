@@ -1,0 +1,28 @@
+{% extends 'base.html' %}
+
+{% load wagtailimages_tags %}
+{% load wagtailcore_tags %}
+
+{% block content %}
+<section class="container p-5">
+  <div class="row">
+    <div>
+        <h2 class="fw-bold mb-3">{{ page.title }}</h2>
+        <small class="text-secondary fst-italic">{{ page.date }} by <strong>Lyndon Joy Cortez</strong></small>
+        <p class="mt-4">{{ page.intro }}</p>
+        <hr>
+    </div>
+    <div class="col-sm-12 col-md-7">
+      <article>
+        {{ page.body|richtext }}
+      </article>
+    </div>
+    {% image page.blog_image fill-400x550 as blog_img %}
+    <div class="col-sm-12 col-md-5 my-auto text-center pb-3">
+        <img src="{{ blog_img.url }}" alt="">
+    </div>
+    <hr>
+    <p><a href="{{ page.get_parent.url }}">Return to blog</a></p>
+  </div>
+</section>
+{% endblock %}
